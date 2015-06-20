@@ -60,13 +60,29 @@ public final class SourceRange implements Comparable<SourceRange> {
 		return offset - other.offset;
 	}
 	
+	/* -----------------  ----------------- */
+	
+	public boolean contains(SourceRange other) {
+		return contains(other.getStartPos()) && contains(other.getEndPos());
+	}
+	
+	public boolean contains(int otherOffset) {
+		return NumberUtil.isInRange(getStartPos(), otherOffset, getEndPos());
+	}
+	
+	public boolean inclusiveContains(int otherOffset) {
+		return contains(otherOffset);
+	}
+	
+	public boolean inclusiveContains(SourceRange other) {
+		return contains(other);
+	}
+	
+	/* -----------------  ----------------- */
+	
 	/** @return a substring of given source using the range of the receiver. */
 	public String getRangeSubString(String source) {
 		return source.substring(getStartPos(), getEndPos());
-	}
-	
-	public boolean inclusiveContains(int offset) {
-		return NumberUtil.isInRange(getStartPos(), offset, getEndPos());
 	}
 	
 }
